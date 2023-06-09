@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fighting Game</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <div id="game-container">
+        <h1>Welcome to the Battle Arena!</h1>
+        <div id="name-container">
+            <label for="player-name">Enter your name:</label>
+            <input type="text" id="player-name" name="player-name">
+            <button id="start-button">Start Game</button>
+        </div>
+        <div id="health-container">
+            <div id="player-health"></div>
+            <div id="enemy-health"></div>
+        </div>
+        <div id="game-log"></div>
+        <div id="attack-container">
+            <button id="normal-attack" disabled>Normal Attack</button>
+            <button id="special-attack" disabled>Special Attack</button>
+        </div>
+        <div id="result-container" style="display: none;">
+            <h2 id="result-message"></h2>
+            <button id="play-again-button">Play Again</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+#game-container {
+    margin: 50px auto;
+    width: 400px;
+}
+
+h1 {
+    color: #333;
+}
+
+#health-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+#player-health,
+#enemy-health {
+    width: 100px;
+    height: 20px;
+    background-color: green;
+}
+
+#game-log {
+    height: 200px;
+    overflow-y: scroll;
+    border: 1px solid #333;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+#attack-container button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 16px;
+}
