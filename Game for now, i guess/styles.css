@@ -13,17 +13,45 @@ h1 {
 }
 
 #health-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
 }
 
-#player-health,
-#enemy-health {
-    width: 100px;
+#enemy-health-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 20px;
+    background-color: rgba(255, 0, 0, 0.2);
+}
+
+#enemy-health {
+    height: 100%;
+    width: 100%;
+    background-color: red;
+}
+
+#player-health-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background-color: rgba(0, 255, 0, 0.7);
+}
+
+#player-health {
+    height: 100%;
+    width: 100%;
     background-color: green;
 }
+
+
 
 #game-log {
     height: 200px;
