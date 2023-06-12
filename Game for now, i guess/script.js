@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", function() {
     var enemyHealth = 100;
 
     function displayHealth() {
-        document.getElementById("player-health").style.width = playerHealth / 2 + "%";
-        document.getElementById("enemy-health").style.width = enemyHealth / 2 + "%";
+        document.getElementById("player-health").style.width = playerHealth + "%";
+        document.getElementById("enemy-health").style.width = enemyHealth + "%";
     }
 
     function logMessage(message) {
@@ -26,21 +26,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function startGame() {
         playerName = document.getElementById("player-name").value;
-        if (playerName.trim() === "") {
-            alert("Please enter your name to start the game.");
+        if (playerName.trim() === "" || !/^[a-zA-Z]+$/.test(playerName)) {
+            alert("Please enter a valid name (letters only) to start the game.");
             return;
         }
 
         document.getElementById("start-button").disabled = true;
         document.getElementById("normal-attack").disabled = false;
-        document.getElementById("special-attack").disabled = false;
+        document.getElementById("special-attack").disabled = true;
 
         logMessage("Welcome, " + playerName + "! The battle begins!");
     }
 
     document.getElementById("start-button").addEventListener("click", startGame);
 
-    document.getElementById("normal-attack").addEventListener("click", function() {
+    var normalAttackButton = document.getElementById("normal-attack");
+    var specialAttackButton = document.getElementById("special-attack");
+    var attackCount = 0;
+
+    normalAttackButton.addEventListener("click", function() {
         enemyHealth = attack(enemyHealth, playerName, "Enemy", Math.floor(Math.random() * 20) + 1);
         if (enemyHealth === 0) {
             logMessage("Congratulations, " + playerName + "! You defeated the enemy!");
@@ -52,18 +56,29 @@ document.addEventListener("DOMContentLoaded", function() {
                 endGame(false);
             }
         }
+
+        attackCount++;
+        if (attackCount >= 3) {
+            specialAttackButton.disabled = false;
+        }
     });
 
-    document.getElementById("special-attack").addEventListener("click", function() {
-        enemyHealth = attack(enemyHealth, playerName, "Enemy", Math.floor(Math.random() * 30) + 10);
-        if (enemyHealth === 0) {
-            logMessage("Congratulations, " + playerName + "! You defeated the enemy!");
-            endGame(true);
-        } else {
-            playerHealth = attack(playerHealth, "Enemy", playerName, Math.floor(Math.random() * 15) + 1);
-            if (playerHealth === 0) {
-                logMessage("Game over, " + playerName + "! You were defeated.");
-                endGame(false);
+    specialAttackButton.addEventListener("click", function() {
+        if (!specialAttackButton.disabled) {
+            specialAttackButton.disabled = true;
+            attackCount = 0;
+
+            // Perform the special attack
+            enemyHealth = attack(enemyHealth, playerName, "Enemy", Math.floor(Math.random() * 30) + 10);
+            if (enemyHealth === 0) {
+                logMessage("Congratulations, " + playerName + "! You defeated the enemy!");
+                endGame(true);
+            } else {
+                playerHealth = attack(playerHealth, "Enemy", playerName, Math.floor(Math.random() * 15) + 1);
+                if (playerHealth === 0) {
+                    logMessage("Game over, " + playerName + "! You were defeated.");
+                    endGame(false);
+                }
             }
         }
     });

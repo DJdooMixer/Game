@@ -1,0 +1,13 @@
+.app {
+  display: flex;
+  justify-content: space-between;
+}
+
+.standard_image {
+  width: 6rem;
+}
+
+#game-log {
+  overflow-y: auto;
+  height: 30rem;
+}
