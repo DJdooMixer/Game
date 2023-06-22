@@ -62,8 +62,8 @@
   height: 100vh;
   display: flex;
   justify-content: space-between;
-  background-image: rgb(110, 181, 228);
-  border-color: rgb(255, 255, 255);
+  background-image: rgb(0, 0, 0);
+  border-color: rgb(0, 0, 0);
   border-style: dashed;
   background-image: url('C:/Users/kludk/src/Game/game-ui/src/images/Backround.jpeg');
   background-size: cover; /* Adjust the background size as needed */
@@ -73,6 +73,6 @@
 #game-log{
   overflow-y: auto;
   height: 50vh;
-  background-color: #fff;
+  background-color: #5a5a5a;
   padding: 1rem;
 }

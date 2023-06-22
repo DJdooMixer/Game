@@ -4,6 +4,7 @@ import './App.css';
 import FightingGame from './FightingGame';
 import wizard from './images/wizard.jpeg';
 import goblin from './images/goblin.jpeg';
+import special from './images/special.jpeg';
 
 function App() {
   const [playerHealth, setPlayerHealth] = useState(100);
@@ -15,7 +16,7 @@ function App() {
     <div className="app">
       <div>
         <img className="standard_image" src={wizard} alt="Wizard" />
-        <div>Player health: {playerHealth}</div>
+        <div>Player's health: {playerHealth}</div>
       </div>
       <FightingGame 
         playerHealth={playerHealth}
@@ -24,10 +25,15 @@ function App() {
         setEnemyHealth={setEnemyHealth} />
       <div>
         <img className="standard_image" src={goblin} alt="Goblin" />
-        <div>Player health: {enemyHealth}</div>
+        <div>Goblin's health: {enemyHealth}</div>
       </div>
-    </div>
+      <img className="standard_image" src={special} alt="special" />
+      </div>
+    
   );
 }
 
 export default App;
+
+
+
