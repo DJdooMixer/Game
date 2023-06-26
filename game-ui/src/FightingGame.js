@@ -33,8 +33,22 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
   function logMessage(message) {
     setGameLog(prevLog => [...prevLog, message]);
 
-    setPlayerHealth(prevPlayerHealth => prevPlayerHealth - 1); // Wizard does 1 damage
-    setEnemyHealth(prevEnemyHealth => prevEnemyHealth - 10); // Goblin does 10 damage
+
+    var minimum = 1;
+var maximum = 10;
+var damage = Math.random() * (maximum - minimum) + minimum;
+var damage2 = Math.random() * (maximum - minimum) + minimum;
+var roundedNumber = Math.round(damage);
+var roundedNumber2 = Math.round(damage2)
+
+console.log("Selected number2: " + damage2);
+console.log("Selected number: " + damage);
+console.log("Rounded number2: " + roundedNumber2);
+console.log("Rounded number: " + roundedNumber);
+
+
+    setPlayerHealth(prevPlayerHealth => prevPlayerHealth - roundedNumber2); // Wizard is dealt 1-10 damage
+    setEnemyHealth(prevEnemyHealth => prevEnemyHealth - roundedNumber); // Goblin is dealt 1-10 damage
   }
 
   function attack(target, attackerName, targetName, damage) {
@@ -77,7 +91,7 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
     } else {
       let updatedPlayerHealth = attack(playerHealth, 'Goblin', playerName, goblinDamage);
 
-      if (updatedPlayerHealth === 0) {
+      if (updatedPlayerHealth === 0 && updatedPlayerHealth  <0) {
         logMessage(`Game over, ${playerName}! You were defeated by the Goblin.`);
         setGameWon(false);
         setGameOver(true);
@@ -106,7 +120,7 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
     } else {
       let updatedPlayerHealth = attack(playerHealth, 'Goblin', playerName, goblinDamage);
 
-      if (updatedPlayerHealth === 0) {
+      if (updatedPlayerHealth === 0 && updatedPlayerHealth <0) {
         logMessage(`Game over, ${playerName}! You were defeated by the Goblin.`);
         setGameWon(false);
         setGameOver(true);

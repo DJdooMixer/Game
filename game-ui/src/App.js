@@ -23,7 +23,7 @@ function App() {
 
             {/*Attacks location*/}
             
-            <div className="attacks-container" style={{ display: 'flex', flexDirection: 'column' }}>
+            <div className="attacks-container " style={{ display: 'flex', flexDirection: 'column' }}> 
               <img className="special standard_image" src={special} alt="Cooldown" />
               <img className="normal standard_image" src={normal} alt="Cooldown" />
             </div>
