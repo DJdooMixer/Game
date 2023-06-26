@@ -76,3 +76,8 @@
   background-color: #5a5a5a;
   padding: 1rem;
 }
+.special,
+.normal{
+  height: 2rem;
+  width: 2rem;
+}

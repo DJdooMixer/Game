@@ -149,7 +149,7 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
           <div>
             <button onClick={handleNormalAttack}>Normal Attack</button>
             <button onClick={handleSpecialAttack}>Special Attack</button>
-            {special && <img className="standard_image" src={special}  alt="Cooldown" />}
+            
           </div>
           <div className="game-log">
             <h2>Game Log</h2>
