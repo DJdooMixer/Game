@@ -16,10 +16,20 @@ function App() {
   return (
     <div className="app">
       <div>
-        <img className="standard_image" src={wizard} alt="Wizard" />
-          <div>
-        {special && <img className="special standard_image" src={special}  alt="Cooldown" />}
-        {normal && <img className="normal standard_image" src={normal}  alt="Cooldown" />}
+       
+
+          <div className="player-hud" style={{ display: 'flex', flexDirection: 'row' }}>
+            <img className="standard_image" src={wizard} alt="Wizard" />
+
+            {/*Attacks location*/}
+            
+            <div className="attacks-container" style={{ display: 'flex', flexDirection: 'column' }}>
+              <img className="special standard_image" src={special} alt="Cooldown" />
+              <img className="normal standard_image" src={normal} alt="Cooldown" />
+            </div>
+          {/*Gradient container*/}
+          
+
          </div>
         <div>Player's health: {playerHealth}</div>
       </div>

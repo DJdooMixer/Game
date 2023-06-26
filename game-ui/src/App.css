@@ -33,6 +33,7 @@
 }
 
 .game-log {
+  background-color: rgb(136, 136, 136);
   max-height: 200px;
   overflow-y: scroll;
   margin-bottom: 20px;
@@ -80,4 +81,11 @@
 .normal{
   height: 2rem;
   width: 2rem;
+}
+.special {
+  background: linear-gradient(to right, #c20909, #c20909);
+}
+
+.normal {
+  background: linear-gradient(to right, #a18cd1, #11a349);
 }

@@ -153,7 +153,7 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
           </div>
           <div className="game-log">
             <h2>Game Log</h2>
-            {gameLog.map((log, index) => (
+            {gameLog.reverse().map((log, index) => (
               <p key={index}>{log}</p>
             ))}
           </div>
