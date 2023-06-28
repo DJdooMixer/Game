@@ -71,8 +71,8 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
 
     
     let updatedEnemyHealth = attack(enemyHealth, playerName, 'Goblin', playerDamage);
-
-    if (updatedEnemyHealth === 0) {
+      console.log(updatedEnemyHealth)
+    if (updatedEnemyHealth === 0 || updatedEnemyHealth <0 ) {
       logMessage(`Congratulations, ${playerName}! You defeated the Goblin!`);
       setGameWon(true);
       setGameOver(true);
@@ -103,7 +103,7 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
 
     let updatedEnemyHealth = attack(enemyHealth, playerName, 'Goblin', playerDamage);
 
-    if (updatedEnemyHealth === 0) {
+    if (updatedEnemyHealth === 0 || updatedEnemyHealth <0 ){
       logMessage(`Congratulations, ${playerName}! You defeated the Goblin!`);
       setGameWon(true);
       setGameOver(true);
@@ -111,7 +111,7 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
     } else {
       let updatedPlayerHealth = attack(playerHealth, 'Goblin', playerName, goblinDamage);
 
-      if (updatedPlayerHealth === 0 && updatedPlayerHealth <0) {
+      if (updatedPlayerHealth === 0 || updatedPlayerHealth <0) {
         logMessage(`Game over, ${playerName}! You were defeated by the Goblin.`);
         setGameWon(false);
         setGameOver(true);
@@ -121,8 +121,8 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
 
     setAttackCount(prevCount => prevCount + 1);
     setSpecialAttackCooldown(true);
-    setPlayerHealth(prevPlayerHealth => prevPlayerHealth - goblinDamage); // Wizard is dealt 1-20 damage
-    setEnemyHealth(prevEnemyHealth => prevEnemyHealth - playerDamage); // Goblin is dealt 1-20 damage
+    setPlayerHealth(prevPlayerHealth => prevPlayerHealth - goblinDamage); // Wizard is dealt 1-40 damage
+    setEnemyHealth(prevEnemyHealth => prevEnemyHealth - playerDamage); // Goblin is dealt 1-40 damage
   }
 
   return (
