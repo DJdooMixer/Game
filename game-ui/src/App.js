@@ -7,6 +7,10 @@ import goblin from './images/goblin.jpeg';
 import special from './images/special.jpeg';
 import normal from './images/normal.jpeg';
 
+import mbi from './images/magicbookicon.jpeg';
+
+import Sidebar from './components/Sidebar';
+
 function App() {
   const [playerHealth, setPlayerHealth] = useState(100);
   const [enemyHealth, setEnemyHealth] = useState(100);
@@ -15,6 +19,8 @@ function App() {
 
   return (
     <div className="app">
+      <Sidebar mbi={mbi} normal = {normal}  special = {special}/>
+      
       <div>
        
 
@@ -24,8 +30,7 @@ function App() {
             {/*Attacks location*/}
             
             <div className="attacks-container " style={{ display: 'flex', flexDirection: 'column' }}> 
-              <img className="special standard_image" src={special} alt="Cooldown" />
-              <img className="normal standard_image" src={normal} alt="Cooldown" />
+       
             </div>
           {/*Gradient container*/}
           
@@ -33,6 +38,7 @@ function App() {
          </div>
         <div style={{color:'white'}}>Player's health: {playerHealth}</div>
       </div>
+
       <FightingGame 
         playerHealth={playerHealth}
         setPlayerHealth={setPlayerHealth} 

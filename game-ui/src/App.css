@@ -82,10 +82,3 @@
   height: 2rem;
   width: 2rem;
 }
-.special {
-  background: linear-gradient(to right, #c20909, #c20909);
-}
-
-.normal {
-  background: linear-gradient(to right, #a18cd1, #11a349);
-}
