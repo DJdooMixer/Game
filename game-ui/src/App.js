@@ -31,7 +31,7 @@ function App() {
           
 
          </div>
-        <div>Player's health: {playerHealth}</div>
+        <div style={{color:'white'}}>Player's health: {playerHealth}</div>
       </div>
       <FightingGame 
         playerHealth={playerHealth}
@@ -40,7 +40,7 @@ function App() {
         setEnemyHealth={setEnemyHealth} />
       <div>
         <img className="standard_image" src={goblin} alt="Goblin" />
-        <div>Goblin's health: {enemyHealth}</div>
+        <div style={{color:'white'}}>Goblin's health: {enemyHealth}</div>
       </div>
     
       </div>

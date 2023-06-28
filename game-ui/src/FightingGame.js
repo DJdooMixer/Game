@@ -30,25 +30,12 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
     }
   }
 
+  function logStartMessage(message) {
+    setGameLog(prevLog => [...prevLog, message]);
+  }
+
   function logMessage(message) {
     setGameLog(prevLog => [...prevLog, message]);
-
-
-    var minimum = 1;
-var maximum = 10;
-var damage = Math.random() * (maximum - minimum) + minimum;
-var damage2 = Math.random() * (maximum - minimum) + minimum;
-var roundedNumber = Math.round(damage);
-var roundedNumber2 = Math.round(damage2)
-
-console.log("Selected number2: " + damage2);
-console.log("Selected number: " + damage);
-console.log("Rounded number2: " + roundedNumber2);
-console.log("Rounded number: " + roundedNumber);
-
-
-    setPlayerHealth(prevPlayerHealth => prevPlayerHealth - roundedNumber2); // Wizard is dealt 1-10 damage
-    setEnemyHealth(prevEnemyHealth => prevEnemyHealth - roundedNumber); // Goblin is dealt 1-10 damage
   }
 
   function attack(target, attackerName, targetName, damage) {
@@ -74,13 +61,15 @@ console.log("Rounded number: " + roundedNumber);
     setAttackCount(0);
     setPlayerHealth(100);
     setEnemyHealth(100);
-    logMessage(`Welcome, ${playerName}! The battle begins!`);
+    console.log(playerHealth) 
+    logStartMessage(`Welcome, ${playerName}! The battle begins!`);
   }
 
   function handleNormalAttack() {
     const playerDamage = Math.floor(Math.random() * 20) + 1;
-    const goblinDamage = Math.floor(Math.random() * 10) + 1;
+    const goblinDamage = Math.floor(Math.random() * 20) + 1;
 
+    
     let updatedEnemyHealth = attack(enemyHealth, playerName, 'Goblin', playerDamage);
 
     if (updatedEnemyHealth === 0) {
@@ -91,7 +80,7 @@ console.log("Rounded number: " + roundedNumber);
     } else {
       let updatedPlayerHealth = attack(playerHealth, 'Goblin', playerName, goblinDamage);
 
-      if (updatedPlayerHealth === 0 && updatedPlayerHealth  <0) {
+      if (updatedPlayerHealth === 0  || updatedPlayerHealth  <0) {
         logMessage(`Game over, ${playerName}! You were defeated by the Goblin.`);
         setGameWon(false);
         setGameOver(true);
@@ -100,6 +89,8 @@ console.log("Rounded number: " + roundedNumber);
     }
 
     setAttackCount(prevCount => prevCount + 1);
+    setPlayerHealth(prevPlayerHealth => prevPlayerHealth - goblinDamage); // Wizard is dealt 1-20 damage
+    setEnemyHealth(prevEnemyHealth => prevEnemyHealth - playerDamage); // Goblin is dealt 1-20 damage
   }
 
   function handleSpecialAttack() {
@@ -108,7 +99,7 @@ console.log("Rounded number: " + roundedNumber);
     }
 
     const playerDamage = Math.floor(Math.random() * 30) + 10;
-    const goblinDamage = Math.floor(Math.random() * 10) + 1;
+    const goblinDamage = Math.floor(Math.random() * 30) + 10;
 
     let updatedEnemyHealth = attack(enemyHealth, playerName, 'Goblin', playerDamage);
 
@@ -130,6 +121,8 @@ console.log("Rounded number: " + roundedNumber);
 
     setAttackCount(prevCount => prevCount + 1);
     setSpecialAttackCooldown(true);
+    setPlayerHealth(prevPlayerHealth => prevPlayerHealth - goblinDamage); // Wizard is dealt 1-20 damage
+    setEnemyHealth(prevEnemyHealth => prevEnemyHealth - playerDamage); // Goblin is dealt 1-20 damage
   }
 
   return (
