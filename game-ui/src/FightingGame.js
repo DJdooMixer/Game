@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import special from './images/special.jpeg';
 
+// Max possible damage
+const attackSheet = {
+  wizard: {
+    normal: 20,
+    special: 30,
+    extraSpecial: 1000,
+  },
+  goblin: {
+    normal: 20,
+  }
+}
+
 function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHealth }) {
   const [playerName, setPlayerName] = useState('');
-  const [attackCount, setAttackCount] = useState(0);
   const [gameLog, setGameLog] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [gameWon, setGameWon] = useState(false);
-  const [specialAttackCooldown, setSpecialAttackCooldown] = useState(false);
-
-  useEffect(() => {
-    const cooldownTimeout = setTimeout(() => {
-      setSpecialAttackCooldown(false);
-    }, 3000);
-
-    return () => {
-      clearTimeout(cooldownTimeout);
-    };
-  }, [specialAttackCooldown]);
+  const [specialAttackReady, setSpecialAttackReady] = useState(false);
+  const [normalAttackCount, setNormalAttackCount] = useState(0);
 
   function displayHealth(playerHealth, enemyHealth) {
     const playerHealthBar = document.getElementById('player-health');
@@ -27,6 +29,7 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
     if (playerHealthBar && enemyHealthBar) {
       playerHealthBar.style.width = `${playerHealth}%`;
       enemyHealthBar.style.width = `${enemyHealth}%`;
+      
     }
   }
 
@@ -58,7 +61,6 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
     setGameStarted(true);
     setGameOver(false);
     setGameLog([]);
-    setAttackCount(0);
     setPlayerHealth(100);
     setEnemyHealth(100);
     console.log(playerHealth) 
@@ -66,8 +68,8 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
   }
 
   function handleNormalAttack() {
-    const playerDamage = Math.floor(Math.random() * 20) + 1;
-    const goblinDamage = Math.floor(Math.random() * 20) + 1;
+    const playerDamage = Math.floor(Math.random() * attackSheet.wizard.normal) + 1;
+    const goblinDamage = Math.floor(Math.random() * attackSheet.goblin.normal) + 1;
 
     
     let updatedEnemyHealth = attack(enemyHealth, playerName, 'Goblin', playerDamage);
@@ -80,26 +82,37 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
     } else {
       let updatedPlayerHealth = attack(playerHealth, 'Goblin', playerName, goblinDamage);
 
+
+
       if (updatedPlayerHealth === 0  || updatedPlayerHealth  <0) {
         logMessage(`Game over, ${playerName}! You were defeated by the Goblin.`);
         setGameWon(false);
         setGameOver(true);
         setGameStarted(false);
+        setPlayerHealth(prevPlayerHealth => prevPlayerHealth - goblinDamage);
+        setEnemyHealth(prevEnemyHealth => prevEnemyHealth - playerDamage);
+      
+       
       }
     }
 
-    setAttackCount(prevCount => prevCount + 1);
+
+    setNormalAttackCount(prevCount => prevCount + 1);
+    if (normalAttackCount + 0 >= 2) {
+      setSpecialAttackReady(true);
+    }
+
     setPlayerHealth(prevPlayerHealth => prevPlayerHealth - goblinDamage); // Wizard is dealt 1-20 damage
     setEnemyHealth(prevEnemyHealth => prevEnemyHealth - playerDamage); // Goblin is dealt 1-20 damage
   }
 
   function handleSpecialAttack() {
-    if (specialAttackCooldown) {
+    if (!specialAttackReady) {
       return;
     }
 
-    const playerDamage = Math.floor(Math.random() * 30) + 10;
-    const goblinDamage = Math.floor(Math.random() * 30) + 10;
+    const playerDamage = Math.floor(Math.random() * attackSheet.wizard.special) + 10;
+    const goblinDamage = Math.floor(Math.random() * attackSheet.goblin.normal);
 
     let updatedEnemyHealth = attack(enemyHealth, playerName, 'Goblin', playerDamage);
 
@@ -116,11 +129,14 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
         setGameWon(false);
         setGameOver(true);
         setGameStarted(false);
+        setIsSpecialAttackAvailable(false);
       }
     }
 
-    setAttackCount(prevCount => prevCount + 1);
-    setSpecialAttackCooldown(true);
+    // Reset Special Attack
+    setNormalAttackCount(0);
+    setSpecialAttackReady(false);
+    // Then, do damage
     setPlayerHealth(prevPlayerHealth => prevPlayerHealth - goblinDamage); // Wizard is dealt 1-40 damage
     setEnemyHealth(prevEnemyHealth => prevEnemyHealth - playerDamage); // Goblin is dealt 1-40 damage
   }
@@ -137,6 +153,7 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
             maxLength={20}
             value={playerName}
             onChange={e => setPlayerName(e.target.value.slice(0, 20))}
+            style={{ fontSize: '24px' }}
           />
           <button onClick={startGame}>Start</button>
         </div>
@@ -145,7 +162,8 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
         <div>
          
             <div className="health-bar-container">
-              <div id="player-health" className="health-bar-progress" />
+              <div id="player-health" className="health-bar-progress" style={{ fontSize: '50px' }}
+  />
             
         
       
@@ -155,7 +173,9 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
           </div>
           <div>
             <button onClick={handleNormalAttack}>Normal Attack</button>
-            <button onClick={handleSpecialAttack}>Special Attack</button>
+            { specialAttackReady &&
+              <button onClick={handleSpecialAttack}>Special Attack</button>
+            }
             
           </div>
           <div className="game-log">

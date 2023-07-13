@@ -11,7 +11,7 @@
 .health-bar {
   width: 300px;
   height: 20px;
-  background-color: #eee;
+  background-color: #e32020;
   border: 1px solid #666;
   margin-bottom: 10px;
 }
@@ -29,7 +29,7 @@
 }
 
 .name-container {
-  margin-bottom: 20px;
+  margin-bottom: 200px;
 }
 
 .game-log {
@@ -81,4 +81,9 @@
 .normal{
   height: 2rem;
   width: 2rem;
+}
+
+.Playerh {
+  /* Add this rule to increase the font size */
+  font-size: 200px;
 }
