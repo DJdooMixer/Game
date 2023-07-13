@@ -7,13 +7,19 @@ const attackSheet = {
     normal: 20,
     special: 30,
     extraSpecial: 1000,
+  
   },
   goblin: {
     normal: 20,
+  },
+
+  firegoblin: { 
+
   }
+  
 }
 
-function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHealth }) {
+function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHealth, goblinStatus, setGoblinStatus }) {
   const [playerName, setPlayerName] = useState('');
   const [gameLog, setGameLog] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
@@ -45,7 +51,8 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
     let updatedTarget = target - damage;
     if (updatedTarget < 0) {
       updatedTarget = 0;
-    }
+      if (effectTurns > 0) {
+    }}
 
     displayHealth(playerHealth, enemyHealth);
     logMessage(`${attackerName} attacked ${targetName} and dealt ${damage} damage!`);
@@ -71,7 +78,13 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
     const playerDamage = Math.floor(Math.random() * attackSheet.wizard.normal) + 1;
     const goblinDamage = Math.floor(Math.random() * attackSheet.goblin.normal) + 1;
 
-    
+    // IDEA: Try to experiment with how the state change works
+    if (Math.random() > 0.5) {
+      setGoblinStatus('fuego')
+    } else {
+      setGoblinStatus('normal')
+    }
+
     let updatedEnemyHealth = attack(enemyHealth, playerName, 'Goblin', playerDamage);
       console.log(updatedEnemyHealth)
     if (updatedEnemyHealth === 0 || updatedEnemyHealth <0 ) {
@@ -92,6 +105,27 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
         setPlayerHealth(prevPlayerHealth => prevPlayerHealth - goblinDamage);
         setEnemyHealth(prevEnemyHealth => prevEnemyHealth - playerDamage);
       
+      // Check if the effect is active
+      if (effectTurns > 0) {
+      // Check the chance for the effect to activate
+      const effectChance = Math.random() * 100;
+      if (effectChance <= 2) {
+        // Activate the effect for 2 turns
+        setEffectTurns(2);
+      
+        if (effectTurns >= 1) {
+          // Do something
+        }
+      }
+    
+    const effectDamage = 5; // Change this value as per your requirement
+    setEnemyHealth(prevEnemyHealth => prevEnemyHealth - effectDamage);
+    logMessage(`The lingering effect deals ${effectDamage} damage!`);
+
+    // Decrease the number of turns remaining for the effect
+    setEffectTurns(prevTurns => prevTurns - 1);}
+  
+
        
       }
     }
@@ -140,6 +174,8 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
     setPlayerHealth(prevPlayerHealth => prevPlayerHealth - goblinDamage); // Wizard is dealt 1-40 damage
     setEnemyHealth(prevEnemyHealth => prevEnemyHealth - playerDamage); // Goblin is dealt 1-40 damage
   }
+
+  const [effectTurns, setEffectTurns] = useState(0);
 
   return (
     <div id="game-container">

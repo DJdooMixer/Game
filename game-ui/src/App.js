@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import FightingGame from './FightingGame';
-import wizard from './images/wizard.jpeg';
-import goblin from './images/goblin.jpeg';
+import wizard from './images/newwizard.jpeg';
+import goblin from './images/newgoblin.jpeg';
 import special from './images/special.jpeg';
 import normal from './images/normal.jpeg';
+import firegoblin from './images/firegoblin.jpeg';
 
 import mbi from './images/magicbookicon.jpeg';
 
@@ -14,6 +15,7 @@ import Sidebar from './components/Sidebar';
 function App() {
   const [playerHealth, setPlayerHealth] = useState(100);
   const [enemyHealth, setEnemyHealth] = useState(100);
+  const [goblinStatus, setGoblinStatus]= useState('normal');
 
   console.log(playerHealth, enemyHealth)
 
@@ -43,9 +45,11 @@ function App() {
         playerHealth={playerHealth}
         setPlayerHealth={setPlayerHealth} 
         enemyHealth={enemyHealth} 
-        setEnemyHealth={setEnemyHealth} />
+        setEnemyHealth={setEnemyHealth}
+        goblinStatus={goblinStatus} 
+        setGoblinStatus={setGoblinStatus} />
       <div>
-        <img className="standard_image" src={goblin} alt="Goblin" />
+        <img className="standard_image" src={goblinStatus == 'normal' ? goblin : firegoblin } alt="Goblin" />
         <div style={{color:'white'}}>Goblin's health: {enemyHealth}</div>
       </div>
     
