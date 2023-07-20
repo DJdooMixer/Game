@@ -27,6 +27,21 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
   const [gameWon, setGameWon] = useState(false);
   const [specialAttackReady, setSpecialAttackReady] = useState(false);
   const [normalAttackCount, setNormalAttackCount] = useState(0);
+  const [effectTurns, setEffectTurns] = useState(0);
+
+  useEffect(() => {
+    // Apply the lingering effect each turn if it's active
+    if (effectTurns > 0) {
+      const effectDamage = 5; // Change this value as per your requirement
+      setEnemyHealth((prevEnemyHealth) => prevEnemyHealth - effectDamage);
+      logMessage(`The lingering effect deals ${effectDamage} damage!`);
+
+      // Decrease the number of turns remaining for the effect
+      setEffectTurns((prevTurns) => prevTurns - 1);
+    }
+
+    // ... other effects and hooks ...
+  }, [effectTurns, setEnemyHealth, logMessage]); // Include any dependencies that this effect uses
 
   function displayHealth(playerHealth, enemyHealth) {
     const playerHealthBar = document.getElementById('player-health');
@@ -45,6 +60,22 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
 
   function logMessage(message) {
     setGameLog(prevLog => [...prevLog, message]);
+  }
+
+
+  function activateLingeringEffect() {
+    // Check if the effect is active
+    if (effectTurns > 0) {
+      // The effect is already active, no need to activate again
+      return;
+    }
+
+    // Check the chance for the effect to activate (e.g., 5% chance)
+    const effectChance = Math.random() * 100;
+    if (effectChance <= 5) {
+      // Activate the effect for 2 turns (you can adjust the number of turns as needed)
+      setEffectTurns(2);
+    }
   }
 
   function attack(target, attackerName, targetName, damage) {
@@ -106,18 +137,19 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
         setEnemyHealth(prevEnemyHealth => prevEnemyHealth - playerDamage);
       
       // Check if the effect is active
-      if (effectTurns > 0) {
+      if (effectTurns > 1) {
       // Check the chance for the effect to activate
       const effectChance = Math.random() * 100;
       if (effectChance <= 2) {
         // Activate the effect for 2 turns
         setEffectTurns(2);
       
-        if (effectTurns >= 1) {
-          // Do something
+         {
+     
         }
       }
-    
+      activateLingeringEffect();
+
     const effectDamage = 5; // Change this value as per your requirement
     setEnemyHealth(prevEnemyHealth => prevEnemyHealth - effectDamage);
     logMessage(`The lingering effect deals ${effectDamage} damage!`);
@@ -139,6 +171,22 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
     setPlayerHealth(prevPlayerHealth => prevPlayerHealth - goblinDamage); // Wizard is dealt 1-20 damage
     setEnemyHealth(prevEnemyHealth => prevEnemyHealth - playerDamage); // Goblin is dealt 1-20 damage
   }
+
+  function activateLingeringEffect() {
+    // Check if the effect is active
+    if (effectTurns > 0) {
+      // The effect is already active, no need to activate again
+      return;
+    }
+  
+    // Check the chance for the effect to activate (e.g., 5% chance)
+    const effectChance = Math.random() * 100;
+    if (effectChance <= 5) {
+      // Activate the effect for 2 turns (you can adjust the number of turns as needed)
+      setEffectTurns(2);
+    }
+  }
+  
 
   function handleSpecialAttack() {
     if (!specialAttackReady) {
@@ -163,7 +211,7 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
         setGameWon(false);
         setGameOver(true);
         setGameStarted(false);
-        setIsSpecialAttackAvailable(false);
+        setSpecialAttackReady(false);
       }
     }
 
@@ -175,8 +223,7 @@ function FightingGame({ playerHealth, setPlayerHealth, enemyHealth, setEnemyHeal
     setEnemyHealth(prevEnemyHealth => prevEnemyHealth - playerDamage); // Goblin is dealt 1-40 damage
   }
 
-  const [effectTurns, setEffectTurns] = useState(0);
-
+ 
   return (
     <div id="game-container">
       <h1>Welcome to the Battle Arena!</h1>
